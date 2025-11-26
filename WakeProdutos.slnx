@@ -1,3 +1,12 @@
 <Solution>
-  <Project Path="WakeProdutos/WakeProdutos.csproj" />
+  <Folder Name="/shared/">
+    <Project Path="WakeProdutos.Shared/WakeProdutos.Shared.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="WakeProdutos.Application/WakeProdutos.Application.csproj" />
+    <Project Path="WakeProdutos.Domain/WakeProdutos.Domain.csproj" />
+    <Project Path="WakeProdutos.Infrastructure/WakeProdutos.Infrastructure.csproj" />
+    <Project Path="WakeProdutos/WakeProdutos.API.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
 </Solution>
