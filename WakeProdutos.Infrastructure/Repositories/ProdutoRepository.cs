@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WakeProdutos.Application.Interfaces;
 using WakeProdutos.Domain.Entities;
-using WakeProdutos.Infrastructure.Persistence;
+using WakeProdutos.Domain.Interfaces;
+using WakeProdutos.Infrastructure.Data.Context;
 
 namespace WakeProdutos.Infrastructure.Repositories
 {
@@ -9,14 +9,15 @@ namespace WakeProdutos.Infrastructure.Repositories
     {
         private readonly WakeDbContext _context = context;
 
-        public async Task<bool> ExistePorNomeAsync(string nome)
-        {
-            return await _context.Produtos.AnyAsync(p => p.Nome == nome);
-        }
-
         public async Task AdicionarAsync(Produto produto)
         {
             _context.Produtos.Add(produto);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AtualizarAsync(Produto produto)
+        {
+            _context.Produtos.Update(produto);
             await _context.SaveChangesAsync();
         }
 

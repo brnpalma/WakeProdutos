@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using WakeProdutos.Shared.Constants;
 
-namespace WakeProdutos.API;
+namespace WakeProdutos.API.Extensions;
 
 public static class DependencyInjection
 {

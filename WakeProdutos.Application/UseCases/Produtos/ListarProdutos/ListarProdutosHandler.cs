@@ -1,18 +1,30 @@
-﻿using WakeProdutos.Shared.Results;
-using MediatR;
-using WakeProdutos.Application.Interfaces;
-using WakeProdutos.Application.Dtos.Produtos;
+﻿using MediatR;
+using WakeProdutos.Application.Dtos;
+using WakeProdutos.Domain.Interfaces;
+using WakeProdutos.Shared.Results;
 
 namespace WakeProdutos.Application.UseCases.Produtos.ListarProdutos
 {
-    public class ListarProdutosHandler(IProdutoService produtoService) 
+    public class ListarProdutosHandler(IProdutoRepository produtoRepository) 
         : IRequestHandler<ListarProdutosRequest, Result<IEnumerable<ListaProdutoDto>>>
     {
-        private readonly IProdutoService _produtoService = produtoService;
+        private readonly IProdutoRepository _produtoRepository = produtoRepository;
 
         public async Task<Result<IEnumerable<ListaProdutoDto>>> Handle(ListarProdutosRequest request, CancellationToken cancellationToken)
         {
-            return await _produtoService.ListarAsync();
+            var produtos = await _produtoRepository.ObterTodosAsync();
+
+            var produtosDto = produtos
+                .Select(p => new ListaProdutoDto
+                {
+                    Id = p.Id,
+                    Nome = p.Nome,
+                    Estoque = p.Estoque,
+                    Valor = p.Valor,
+                })
+                .ToList();
+
+            return Result<IEnumerable<ListaProdutoDto>>.Ok(produtosDto, 200);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using WakeProdutos.Domain.Entities;
+using WakeProdutos.Infrastructure.Data.Context;
 
-namespace WakeProdutos.Infrastructure.Persistence
+namespace WakeProdutos.Infrastructure.Data.Seed
 {
     public static class WakeDbContextSeed
     {

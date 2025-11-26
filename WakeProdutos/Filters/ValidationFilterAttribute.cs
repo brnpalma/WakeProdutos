@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace WakeProdutos.API.Filters
 {
-    public class ValidateModelAttribute : ActionFilterAttribute
+    public class ValidationFilterAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {

@@ -1,4 +1,4 @@
-﻿namespace WakeProdutos.Application.Dtos.Produtos
+﻿namespace WakeProdutos.Application.Dtos
 {
     public class ProdutoDto
     {
