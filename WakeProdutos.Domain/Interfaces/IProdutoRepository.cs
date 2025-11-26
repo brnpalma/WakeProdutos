@@ -6,6 +6,7 @@ namespace WakeProdutos.Domain.Interfaces
     {
         Task AdicionarAsync(Produto produto);
         Task AtualizarAsync(Produto produto);
+        Task DeletarAsync(Produto produto);
         Task<Produto?> ObterPorIdAsync(long id);
         Task<IEnumerable<Produto>> ObterTodosAsync();
     }

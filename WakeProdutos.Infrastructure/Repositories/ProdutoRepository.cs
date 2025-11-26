@@ -21,6 +21,12 @@ namespace WakeProdutos.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeletarAsync(Produto produto)
+        {
+            _context.Produtos.Remove(produto);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<Produto?> ObterPorIdAsync(long id)
         {
             return await _context.Produtos.FirstOrDefaultAsync(p => p.Id == id);

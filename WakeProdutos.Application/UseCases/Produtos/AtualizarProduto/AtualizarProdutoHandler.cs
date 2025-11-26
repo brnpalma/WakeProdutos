@@ -16,7 +16,7 @@ namespace WakeProdutos.Application.UseCases.Produtos.AtualizarProduto
 
             if (produtoBanco is null)
             {
-                return Result<ProdutoDto>.Fail(400, "Nenhum produto encontrado com este Id.", null);
+                return Result<ProdutoDto>.Fail(404, "Nenhum produto encontrado com este Id.", null);
             }
 
             if (!Produto.CheckData(request.Nome, request.Estoque, request.Valor, out var produtoAtualizado, out var error))
