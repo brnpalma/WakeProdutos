@@ -2,10 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WakeProdutos.Infrastructure.Persistence;
 using WakeProdutos.Infrastructure.Repositories;
-using WakeProdutos.Application.Interfaces;
 using Ardalis.GuardClauses;
+using WakeProdutos.Domain.Interfaces;
+using WakeProdutos.Infrastructure.Data.Context;
 
 namespace WakeProdutos.Infrastructure;
 

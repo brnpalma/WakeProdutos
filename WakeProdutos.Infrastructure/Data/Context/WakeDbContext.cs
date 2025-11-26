@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WakeProdutos.Domain.Entities;
 
-namespace WakeProdutos.Infrastructure.Persistence
+namespace WakeProdutos.Infrastructure.Data.Context
 {
     public class WakeDbContext(DbContextOptions<WakeDbContext> options) : DbContext(options)
     {

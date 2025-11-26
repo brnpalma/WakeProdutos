@@ -7,7 +7,7 @@
         public int Estoque { get; set; } = estoque;
         public decimal Valor { get; set; } = valor;
 
-        public static bool TryCreate(string nome, int estoque, decimal valor, out Produto? produto, out string? error)
+        public static bool CheckData(string nome, int estoque, decimal valor, out Produto produto, out string? error)
         {
             produto = null;
             error = null;

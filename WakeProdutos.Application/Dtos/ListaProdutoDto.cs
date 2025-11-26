@@ -1,9 +1,10 @@
-﻿namespace WakeProdutos.Application.Dtos.Produtos
+﻿namespace WakeProdutos.Application.Dtos
 {
     public class ListaProdutoDto
     {
         public long Id { get; set; }
         public string Nome { get; set; }
-        public decimal Peso { get; set; }
+        public int Estoque { get; set; }
+        public decimal Valor { get; set; }
     }
 }

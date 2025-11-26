@@ -1,18 +1,18 @@
 using Scalar.AspNetCore;
-using System.Reflection;
-using WakeProdutos.API;
+using WakeProdutos.API.Extensions;
 using WakeProdutos.API.Filters;
 using WakeProdutos.API.Middleware;
 using WakeProdutos.Application;
 using WakeProdutos.Infrastructure;
-using WakeProdutos.Infrastructure.Persistence;
+using WakeProdutos.Infrastructure.Data.Context;
+using WakeProdutos.Infrastructure.Data.Seed;
 using WakeProdutos.Shared.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers(options =>
 {
-    options.Filters.Add<ValidateModelAttribute>();
+    options.Filters.Add<ValidationFilterAttribute>();
 });
 
 builder.AddApplicationServices();
