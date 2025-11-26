@@ -3,14 +3,14 @@ using WakeProdutos.Application.Dtos;
 using WakeProdutos.Domain.Interfaces;
 using WakeProdutos.Shared.Results;
 
-namespace WakeProdutos.Application.UseCases.Produtos.ListarProdutos
+namespace WakeProdutos.Application.UseCases.Produtos.Queries.ListarProdutos
 {
     public class ListarProdutosHandler(IProdutoRepository produtoRepository) 
-        : IRequestHandler<ListarProdutosRequest, Result<IEnumerable<ListaProdutoDto>>>
+        : IRequestHandler<ListarProdutosCommand, Result<IEnumerable<ListaProdutoDto>>>
     {
         private readonly IProdutoRepository _produtoRepository = produtoRepository;
 
-        public async Task<Result<IEnumerable<ListaProdutoDto>>> Handle(ListarProdutosRequest request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<ListaProdutoDto>>> Handle(ListarProdutosCommand request, CancellationToken cancellationToken)
         {
             var produtos = await _produtoRepository.ObterTodosAsync();
 

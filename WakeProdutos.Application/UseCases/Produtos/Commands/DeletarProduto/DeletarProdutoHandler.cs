@@ -3,7 +3,7 @@ using WakeProdutos.Application.Dtos;
 using WakeProdutos.Domain.Interfaces;
 using WakeProdutos.Shared.Results;
 
-namespace WakeProdutos.Application.UseCases.Produtos.DeletarProduto
+namespace WakeProdutos.Application.UseCases.Produtos.Commands.DeletarProduto
 {
     public class DeletarProdutoHandler(IProdutoRepository produtoRepository) : IRequestHandler<DeletarProdutoCommand, Result<ProdutoDto>>
     {

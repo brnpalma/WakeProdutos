@@ -1,12 +1,13 @@
 ﻿using WakeProdutos.Shared.Results;
 using Microsoft.AspNetCore.Mvc;
-using WakeProdutos.Application.UseCases.Produtos.ListarProdutos;
 using WakeProdutos.Shared.Constants;
 using MediatR;
 using WakeProdutos.Application.Dtos;
-using WakeProdutos.Application.UseCases.Produtos.CadastrarProdutos;
-using WakeProdutos.Application.UseCases.Produtos.AtualizarProduto;
-using WakeProdutos.Application.UseCases.Produtos.DeletarProduto;
+using WakeProdutos.Application.UseCases.Produtos.Commands.CadastrarProdutos;
+using WakeProdutos.Application.UseCases.Produtos.Commands.AtualizarProduto;
+using WakeProdutos.Application.UseCases.Produtos.Commands.DeletarProduto;
+using WakeProdutos.Application.UseCases.Produtos.Queries.ProdutoPorId;
+using WakeProdutos.Application.UseCases.Produtos.Queries.ListarProdutos;
 
 namespace WakeProdutos.API.Controllers 
 {
@@ -55,6 +56,20 @@ namespace WakeProdutos.API.Controllers
             return StatusCode(result.Status, result.Data is null ? result : result.Data);
         }
 
+        [HttpGet("produtos/{id}")]
+        [ProducesResponseType(typeof(ProdutoDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status500InternalServerError)]
+        [EndpointDescription("Consultar o cadastro de um prodm uto por Id.")]
+        public async Task<IActionResult> ObterProdutoPorId([FromRoute] long id)
+        {
+            var command = new ObterProdutoPorIdQuery(id);
+
+            var result = await _sender.Send(command);
+            return StatusCode(result.Status, result.Data is null ? result : result.Data);
+        }
+
         [HttpGet("produtos")]
         [ProducesResponseType(typeof(ProdutoDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status400BadRequest)]
@@ -62,7 +77,7 @@ namespace WakeProdutos.API.Controllers
         [EndpointDescription("Retorna uma lista de produtos existentes.")]
         public async Task<IActionResult> ListarProdutos()
         {
-            var result = await _sender.Send(new ListarProdutosRequest());
+            var result = await _sender.Send(new ListarProdutosCommand());
 
             if (result.Data is null)
                 return StatusCode(result.Status, result);

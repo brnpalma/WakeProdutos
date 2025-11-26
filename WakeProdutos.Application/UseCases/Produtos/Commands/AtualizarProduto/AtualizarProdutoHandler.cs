@@ -4,7 +4,7 @@ using WakeProdutos.Domain.Entities;
 using WakeProdutos.Domain.Interfaces;
 using WakeProdutos.Shared.Results;
 
-namespace WakeProdutos.Application.UseCases.Produtos.AtualizarProduto
+namespace WakeProdutos.Application.UseCases.Produtos.Commands.AtualizarProduto
 {
     public class AtualizarProdutoHandler(IProdutoRepository produtoRepository) : IRequestHandler<AtualizarProdutoCommand, Result<ProdutoDto>>
     {
