@@ -6,11 +6,11 @@ using WakeProdutos.Shared.Results;
 namespace WakeProdutos.Application.UseCases.Produtos.Queries.ListarProdutos
 {
     public class ListarProdutosHandler(IProdutoRepository produtoRepository) 
-        : IRequestHandler<ListarProdutosCommand, Result<IEnumerable<ListaProdutoDto>>>
+        : IRequestHandler<ListarProdutosQuery, Result<IEnumerable<ListaProdutoDto>>>
     {
         private readonly IProdutoRepository _produtoRepository = produtoRepository;
 
-        public async Task<Result<IEnumerable<ListaProdutoDto>>> Handle(ListarProdutosCommand request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<ListaProdutoDto>>> Handle(ListarProdutosQuery request, CancellationToken cancellationToken)
         {
             var propsValidas = typeof(ListaProdutoDto)
                 .GetProperties()
