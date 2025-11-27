@@ -12,7 +12,18 @@ namespace WakeProdutos.Application.UseCases.Produtos.Queries.ListarProdutos
 
         public async Task<Result<IEnumerable<ListaProdutoDto>>> Handle(ListarProdutosCommand request, CancellationToken cancellationToken)
         {
-            var produtos = await _produtoRepository.ObterTodosAsync();
+            var propsValidas = typeof(ListaProdutoDto)
+                .GetProperties()
+                .Select(p => p.Name.ToLower()).ToList();
+
+            if (!string.IsNullOrWhiteSpace(request.OrdenarPor) 
+                && !propsValidas.Contains(request.OrdenarPor.ToLower()))
+            {
+                var mensagem = $"Parâmetro 'ordenarPor' inválido. Valores possíveis: {string.Join(", ", propsValidas)}";
+                return Result<IEnumerable<ListaProdutoDto>>.Fail(400, mensagem, null);
+            }
+
+            var produtos = await _produtoRepository.ObterListaComFiltrosAsync(request.Nome, request.OrdenarPor);
 
             var produtosDto = produtos
                 .Select(p => new ListaProdutoDto

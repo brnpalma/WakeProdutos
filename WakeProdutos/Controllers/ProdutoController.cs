@@ -61,7 +61,7 @@ namespace WakeProdutos.API.Controllers
         [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status500InternalServerError)]
-        [EndpointDescription("Consultar o cadastro de um prodm uto por Id.")]
+        [EndpointDescription("Consultar o cadastro de um produto por Id.")]
         public async Task<IActionResult> ObterProdutoPorId([FromRoute] long id)
         {
             var command = new ObterProdutoPorIdQuery(id);
@@ -74,10 +74,10 @@ namespace WakeProdutos.API.Controllers
         [ProducesResponseType(typeof(ProdutoDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status500InternalServerError)]
-        [EndpointDescription("Retorna uma lista de produtos existentes.")]
-        public async Task<IActionResult> ListarProdutos()
+        [EndpointDescription("Retorna uma lista de produtos com filtros opcionais de busca por nome e ordenação.")]
+        public async Task<IActionResult> ListarProdutos([FromQuery] string? nome, [FromQuery] string? ordenarPor)
         {
-            var result = await _sender.Send(new ListarProdutosCommand());
+            var result = await _sender.Send(new ListarProdutosCommand(nome, ordenarPor));
 
             if (result.Data is null)
                 return StatusCode(result.Status, result);
