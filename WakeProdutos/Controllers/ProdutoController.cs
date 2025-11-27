@@ -1,11 +1,13 @@
 ﻿using WakeProdutos.Shared.Results;
 using Microsoft.AspNetCore.Mvc;
-using WakeProdutos.Application.UseCases.Produtos.ListarProdutos;
 using WakeProdutos.Shared.Constants;
 using MediatR;
 using WakeProdutos.Application.Dtos;
-using WakeProdutos.Application.UseCases.Produtos.CadastrarProdutos;
-using WakeProdutos.Application.UseCases.Produtos.AtualizarProduto;
+using WakeProdutos.Application.UseCases.Produtos.Commands.CadastrarProdutos;
+using WakeProdutos.Application.UseCases.Produtos.Commands.AtualizarProduto;
+using WakeProdutos.Application.UseCases.Produtos.Commands.DeletarProduto;
+using WakeProdutos.Application.UseCases.Produtos.Queries.ProdutoPorId;
+using WakeProdutos.Application.UseCases.Produtos.Queries.ListarProdutos;
 
 namespace WakeProdutos.API.Controllers 
 {
@@ -27,13 +29,42 @@ namespace WakeProdutos.API.Controllers
         }
 
         [HttpPut("produtos/{id}")]
-        [ProducesResponseType(typeof(ProdutoDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ProdutoDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status500InternalServerError)]
-        [EndpointDescription("Alterar dados de um produto já existente.")]
+        [EndpointDescription("Alterar dados de um produto através de seu ID já existente.")]
         public async Task<IActionResult> AtualizarProduto([FromRoute] long id, [FromBody] AtualizarProdutoDto request)
         {
             var command = new AtualizarProdutoCommand(id, request.Nome, request.Estoque, request.Valor);
+
+            var result = await _sender.Send(command);
+            return StatusCode(result.Status, result.Data is null ? result : result.Data);
+        }
+
+        [HttpDelete("produtos/{id}")]
+        [ProducesResponseType(typeof(ProdutoDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status500InternalServerError)]
+        [EndpointDescription("Deletar um produto por Id.")]
+        public async Task<IActionResult> DeletarProduto([FromRoute] long id)
+        {
+            var command = new DeletarProdutoCommand(id);
+
+            var result = await _sender.Send(command);
+            return StatusCode(result.Status, result.Data is null ? result : result.Data);
+        }
+
+        [HttpGet("produtos/{id}")]
+        [ProducesResponseType(typeof(ProdutoDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status500InternalServerError)]
+        [EndpointDescription("Consultar o cadastro de um produto por Id.")]
+        public async Task<IActionResult> ObterProdutoPorId([FromRoute] long id)
+        {
+            var command = new ObterProdutoPorIdQuery(id);
 
             var result = await _sender.Send(command);
             return StatusCode(result.Status, result.Data is null ? result : result.Data);
@@ -43,10 +74,10 @@ namespace WakeProdutos.API.Controllers
         [ProducesResponseType(typeof(ProdutoDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result<ProdutoDto>), StatusCodes.Status500InternalServerError)]
-        [EndpointDescription("Autentica um usuário e gera um token JWT. Retorna o token e informações básicas da sessão.")]
-        public async Task<IActionResult> ListarProdutos()
+        [EndpointDescription("Retorna uma lista de produtos com filtros opcionais de busca por nome e ordenação.")]
+        public async Task<IActionResult> ListarProdutos([FromQuery] string? nome, [FromQuery] string? ordenarPor)
         {
-            var result = await _sender.Send(new ListarProdutosRequest());
+            var result = await _sender.Send(new ListarProdutosCommand(nome, ordenarPor));
 
             if (result.Data is null)
                 return StatusCode(result.Status, result);

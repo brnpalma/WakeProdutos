@@ -18,8 +18,4 @@
     <ProjectReference Include="..\WakeProdutos.Shared\WakeProdutos.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UseCases\Produtos\DeletarProduto\" />
-  </ItemGroup>
-
 </Project>

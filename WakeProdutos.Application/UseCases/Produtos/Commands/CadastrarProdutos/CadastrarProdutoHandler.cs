@@ -4,7 +4,7 @@ using WakeProdutos.Domain.Entities;
 using WakeProdutos.Domain.Interfaces;
 using WakeProdutos.Shared.Results;
 
-namespace WakeProdutos.Application.UseCases.Produtos.CadastrarProdutos
+namespace WakeProdutos.Application.UseCases.Produtos.Commands.CadastrarProdutos
 {
     public class CadastrarProdutoHandler(IProdutoRepository produtoRepository) : IRequestHandler<CadastrarProdutoCommand, Result<ProdutoDto>>
     {
