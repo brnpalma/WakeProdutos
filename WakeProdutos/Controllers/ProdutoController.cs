@@ -77,7 +77,7 @@ namespace WakeProdutos.API.Controllers
         [EndpointDescription("Retorna uma lista de produtos com filtros opcionais de busca por nome e ordenação.")]
         public async Task<IActionResult> ListarProdutos([FromQuery] string? nome, [FromQuery] string? ordenarPor)
         {
-            var result = await _sender.Send(new ListarProdutosCommand(nome, ordenarPor));
+            var result = await _sender.Send(new ListarProdutosQuery(nome, ordenarPor));
 
             if (result.Data is null)
                 return StatusCode(result.Status, result);
