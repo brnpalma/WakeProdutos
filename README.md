@@ -40,6 +40,7 @@ Tecnologias e bibliotecas
 
 Estrutura da Solution (principais pastas/arquivos)
 -------------------------------------------------
+
 📁 src
 ├─📁 WakeProdutos.API
 │  ├─📁 Properties
@@ -103,11 +104,12 @@ Estrutura da Solution (principais pastas/arquivos)
 │  └─📄 SonarLint.xml
 │
 └─📁 WakeProdutos.Shared
-   ├─📁 Constants
-   │  └─📄 Constantes.cs
-   ├─📁 Results
-   │  └─📄 Result.cs
-   └─📄 SonarLint.xml
+    ├─📁 Constants
+    │  └─📄 Constantes.cs
+    ├─📁 Results
+    │  └─📄 Result.cs
+    └─📄 SonarLint.xml
+
 📁 tests
 ├─📁 WakeProdutos.Tests.Integration
 │  ├─📄 IntegrationTestsFactory.cs
@@ -120,19 +122,18 @@ Estrutura da Solution (principais pastas/arquivos)
 │  └─📄 xunit.runner.visualstudio.dotnetcore.testadapter.dll
 │
 └─📁 WakeProdutos.Tests.Unit
-   ├─📁 ProdutoTests
-   │  ├─📄 AtualizarProdutoTests.cs
-   │  ├─📄 CadastrarProdutoTests.cs
-   │  ├─📄 DeletarProdutoTests.cs
-   │  ├─📄 ListarProdutosTests.cs
-   │  └─📄 ObterProdutoPorIdTests.cs
-   ├─📄 SonarLint.xml
-   ├─📄 testhost.dll
-   ├─📄 testhost.exe
-   ├─📄 xunit.runner.reporters.netcoreapp10.dll
-   ├─📄 xunit.runner.utility.netcoreapp10.dll
-   └─📄 xunit.runner.visualstudio.dotnetcore.testadapter.dll
-
+    ├─📁 ProdutoTests
+    │  ├─📄 AtualizarProdutoTests.cs
+    │  ├─📄 CadastrarProdutoTests.cs
+    │  ├─📄 DeletarProdutoTests.cs
+    │  ├─📄 ListarProdutosTests.cs
+    │  └─📄 ObterProdutoPorIdTests.cs
+    ├─📄 SonarLint.xml
+    ├─📄 testhost.dll
+    ├─📄 testhost.exe
+    ├─📄 xunit.runner.reporters.netcoreapp10.dll
+    ├─📄 xunit.runner.utility.netcoreapp10.dll
+    └─📄 xunit.runner.visualstudio.dotnetcore.testadapter.dll
 
 Abordagem do Entity Framework
 -----------------------------
@@ -146,10 +147,10 @@ Pré-requisitos: .NET9 SDK instalado.
 1. Iniciar API localmente:
  - A partir da pasta raiz da solution: `dotnet run --project WakeProdutos/WakeProdutos.API.csproj`
  - Por padrão a aplicação inicia com a interface `Scalar`.
-2. Usar Swagger (opcional):
- - Acesse `https://localhost:{port}/swagger` (ou `http://` conforme configuração) para usar a UI do Swagger.
-3. Ou acessar a interface Scalar (padrão):
- - Acesse `https://localhost:{port}/scalar` para a UI principal.
+2. Usar Scalar (padrão):
+ - Acesse `https://localhost:{port}/scalar` para usar a UI do Scalar.
+3. Ou acessar a interface Swagger (opcional):
+ - Acesse `https://localhost:{port}/swagger` para a UI tradicional opcionalmente.
 
 Como executar os testes
 ----------------------
@@ -164,18 +165,6 @@ Base: `/api/v1`
 - `POST /produtos` — Cadastrar produto
 - `PUT /produtos/{id}` — Atualizar produto
 - `DELETE /produtos/{id}` — Deletar produto
-
-Notas sobre design e mensagens do time
--------------------------------------
-Segue um resumo automático que documenta os padrões já aplicados no projeto:
-
-"Boa, Bruno! ?????\nPelo que você já me mostrou do seu código, dá pra identificar claramente alguns desses padrões de projeto em uso:\n\n?? Repository\nVocê tem um _produtoRepository com métodos como ObterListaComFiltrosAsync, AtualizarAsync, DeletarAsync.\nIsso é exatamente o Repository Pattern: encapsular o acesso ao banco de dados em uma camada própria, em vez de acessar o DbContext diretamente no controller ou handler.\n\n?? Unit of Work\nO Unit of Work geralmente é representado pelo próprio DbContext do Entity Framework.\n- Quando você chama await _context.SaveChangesAsync(), está confirmando todas as operações pendentes como uma única transação.\n- Se você tivesse vários repositórios (ex.: ProdutoRepository, ClienteRepository), todos poderiam compartilhar o mesmo DbContext, e o SaveChangesAsync garantiria que tudo fosse persistido junto.\n?? Então sim, você já está usando Unit of Work de forma implícita via EF Core.\n\n?? CQRS\nVocê já implementou Commands e Queries separados:\n- AtualizarProdutoCommand, DeletarProdutoCommand ? Commands (alteram estado).\n- ObterProdutoPorIdQuery, ListarProdutosCommand ? Queries (consultam dados).\n- E está usando o MediatR para enviar esses comandos/queries para seus handlers.\n?? Isso é a essência do CQRS Pattern.\n\n?? Resumindo\nSeu projeto já está aplicando:\n- ? Repository Pattern\n- ? Unit of Work (via EF Core)\n- ? CQRS (com MediatR)"
-
-Checklist (tarefas sugeridas)
-----------------------------
-- [ ] Verificar o que dá para aproveitar do README do Apex
-- [ ] Incluir exemplos de requisições (curl / httpie)
-- [ ] Documentar pipelines CI/CD (se aplicável)
 
 Contato
 -------
