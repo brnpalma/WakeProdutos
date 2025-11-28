@@ -78,7 +78,7 @@ public class ProdutosControllerTests(IntegrationTestsFactory factory) : IClassFi
     }
 
     [Fact]
-    public async Task DeletarProduto_DeletaProduto()
+    public async Task DeletarProduto_ExcluiProdutoLogicamente()
     {
         // Primeiro criar
         var create = new CadastrarProdutoCommand("Lixeira de aluminio", 3, 20.0m);
@@ -98,5 +98,16 @@ public class ProdutosControllerTests(IntegrationTestsFactory factory) : IClassFi
 
         deleted.Should().NotBeNull();
         deleted!.Id.Should().Be(id);
+
+        // Verificar exclusão lógica: consulta por id deve retornar NotFound
+        var getResp = await _client.GetAsync($"/api/v1/produtos/{id}");
+        getResp.StatusCode.Should().Be(HttpStatusCode.NotFound);
+
+        // E o produto não deve aparecer na listagem
+        var listResp = await _client.GetAsync("/api/v1/produtos");
+        listResp.StatusCode.Should().Be(HttpStatusCode.OK);
+        var produtos = await listResp.Content.ReadFromJsonAsync<ProdutoDto[]>();
+        produtos.Should().NotBeNull();
+        produtos!.Should().NotContain(p => p.Id == id);
     }
 }
