@@ -16,7 +16,11 @@ public class DeletarProdutoTests
         var produto = new Produto("Bola Nike total 90", 2, 10m) { Id = 3 };
         var repoMock = new Mock<IProdutoRepository>();
         repoMock.Setup(r => r.ObterPorIdAsync(3)).ReturnsAsync(produto);
-        repoMock.Setup(r => r.DeletarAsync(produto)).Returns(Task.CompletedTask);
+
+        Produto? captured = null;
+        repoMock.Setup(r => r.DeletarAsync(It.IsAny<Produto>()))
+            .Callback<Produto>(p => captured = p)
+            .Returns(Task.CompletedTask);
 
         var handler = new DeletarProdutoHandler(repoMock.Object);
         var command = new DeletarProdutoCommand(3);
@@ -27,6 +31,10 @@ public class DeletarProdutoTests
         result.Status.Should().Be(200);
         result.Data.Should().NotBeNull();
         result.Data!.Id.Should().Be(3);
+
+        // Verifica que o repositório foi chamado com um produto marcado como excluído (exclusão lógica)
+        captured.Should().NotBeNull();
+        captured!.Excluido.Should().BeTrue();
     }
 
     [Fact(DisplayName = "Deletar produto inexistente, deve retornar HTTP 404.")]
