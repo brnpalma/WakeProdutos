@@ -142,4 +142,4 @@ Base: `/api/v1`
 - `GET /produtos/{id}` — Obter produto por id
 - `POST /produtos` — Cadastrar produto
 - `PUT /produtos/{id}` — Atualizar produto
-- `DELETE /produtos/{id}` — Deletar produto
+- `DELETE /produtos/{id}` — Deletar produto. Aqui ocorre uma exclusão lógica (soft delete) para maior rastreabilidade e consistência dos dados.

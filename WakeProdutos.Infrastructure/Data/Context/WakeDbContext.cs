@@ -13,6 +13,7 @@ namespace WakeProdutos.Infrastructure.Data.Context
             {
                 builder.Property(p => p.Nome).IsRequired();
                 builder.Property(p => p.Valor).HasPrecision(18, 2);
+                builder.Property(p => p.Excluido).HasDefaultValue(false);
             });
         }
     }
