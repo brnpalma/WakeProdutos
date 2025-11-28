@@ -13,11 +13,14 @@ public static class DependencyInjection
 {
     public static void AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
-        var connectionString = builder.Configuration.GetConnectionString("WakeDb");
-        Guard.Against.Null(connectionString, message: "Connection string 'WakeDb' não encontrada.");
+        if (!builder.Environment.IsEnvironment("IntegrationTests") && builder.Environment.IsDevelopment())
+        {
+            var connectionString = builder.Configuration.GetConnectionString("WakeDb");
+            Guard.Against.Null(connectionString, message: "Connection string 'WakeDb' não encontrada.");
 
-        builder.Services.AddDbContext<WakeDbContext>(options =>
-            options.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<WakeDbContext>(options =>
+                options.UseSqlServer(connectionString));
+        }
 
         // Repositórios
         builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
