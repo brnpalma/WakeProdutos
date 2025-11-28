@@ -1,17 +1,16 @@
 ﻿# WakeProdutos
 
-Breve descrição
----------------
-Aplicação de exemplo para gestão de produtos (CRUD) desenvolvida em .NET9, usando arquitetura em camadas e padrões de projeto como Repository, CQRS e Unit of Work (via EF Core). A API expõe endpoints para criar, atualizar, listar, obter por id e deletar produtos.
+### Breve descrição
+Aplicação de exemplo para gestão de produtos (CRUD) desenvolvida em .NET 9, usando arquitetura em camadas (Clean Architecture) e padrões de projeto como Repository, CQRS e Unit of Work (via EF Core). A API expõe endpoints para criar, atualizar, listar, obter por id e deletar produtos.
 
-Observações iniciais
--------------------
-- Por padrão a aplicação inicializa com *Scalar* (`Scalar.AspNetCore`) — uma interface mais completa e com visual personalizado.
-- Também é possível expor e usar o *Swagger* (via `Swashbuckle`) se preferir uma interface mais tradicional.
+### Observações iniciais
+
 - O modo *Code-First* foi o escolhido para desenvolvimento de toda a aplicação.
+- Por padrão a aplicação inicializa com *Scalar* (`Scalar.AspNetCore`) — uma interface mais completa e com visual personalizado em `https://localhost:{port}/scalar`.
+- Também é possível expor e usar o *Swagger* (via `Swashbuckle`) se preferir uma interface mais tradicional em `https://localhost:{port}/swagger`.
 
-Projetos na Solution
----------------------
+### Projetos na Solution
+
 - `WakeProdutos.API` — Projeto ASP.NET Core Web API com controllers e configuração do pipeline.
 - `WakeProdutos.Application` — Casos de uso, DTOs e handlers (MediatR) para CQRS.
 - `WakeProdutos.Infrastructure` — Implementações de acesso a dados, EF Core `DbContext`, repositórios e seed.
@@ -20,15 +19,15 @@ Projetos na Solution
 - `tests/WakeProdutos.Tests.Unit` — Testes unitários (xUnit, Moq, FluentAssertions).
 - `tests/WakeProdutos.Tests.Integration` — Testes de integração (xUnit, WebApplicationFactory, InMemory DB).
 
-Padrões de projeto utilizados
------------------------------
+### Padrões de projeto utilizados
+
 - Repository: `IProdutoRepository` e `ProdutoRepository` isolam acesso ao banco.
 - Unit of Work: usado implicitamente via `WakeDbContext` do EF Core (chamadas a `SaveChangesAsync` concentram a persistência).
 - CQRS: separação entre Commands (alterações) e Queries (consultas) usando MediatR.
 - Mediator: `MediatR` para mediar chamadas entre controllers e handlers.
 
-Tecnologias e bibliotecas
--------------------------
+### Tecnologias e bibliotecas
+
 - .NET9 (C#13)
 - ASP.NET Core Web API
 - Entity Framework Core (Code-First)
@@ -38,10 +37,10 @@ Tecnologias e bibliotecas
 - Swashbuckle (Swagger)
 - xUnit, Moq, FluentAssertions (testes)
 
-Estrutura da Solution (principais pastas/arquivos)
--------------------------------------------------
+### Estrutura da Solution (principais pastas/arquivos)
+
+```
 📁 src
-│
 ├─📁 WakeProdutos.API
 │  ├─📁 Properties
 │  │  └─📄 launchSettings.json
@@ -82,50 +81,45 @@ Estrutura da Solution (principais pastas/arquivos)
 ├─📁 WakeProdutos.Domain
 │  ├─📁 Entities
 │  │  └─📄 Produto.cs
-│  ├─📁 Interfaces
-│  │  └─📄 IProdutoRepository.cs
-│  └─📄 SonarLint.xml
+│  └─📁 Interfaces
+│     └─📄 IProdutoRepository.cs
 │
 ├─📁 WakeProdutos.Infrastructure
-│  ├─📁 Data
-│  │  ├─📁 Context
-│  │  │  ├─📄 WakeDbContext.cs
-│  │  │  └─📄 WakeDbContextSeed.cs
-│  │  ├─📁 Repositories
-│  │  │  └─📄 ProdutoRepository.cs
-│  │  └─📄 DependencyInjection.cs
-│  └─📄 SonarLint.xml
+│  └─📁 Data
+│     ├─📁 Context
+│     │  ├─📄 WakeDbContext.cs
+│     │  └─📄 WakeDbContextSeed.cs
+│     ├─📁 Repositories
+│     │  └─📄 ProdutoRepository.cs
+│     └─📄 DependencyInjection.cs
 │
 └─📁 WakeProdutos.Shared
    ├─📁 Constants
    │  └─📄 Constantes.cs
-   ├─📁 Results
-   │  └─📄 Result.cs
-   └─📄 SonarLint.xml
+   └─📁 Results
+      └─📄 Result.cs
+   
 📁 tests
-│
 ├─📁 WakeProdutos.Tests.Integration
 │  ├─📄 IntegrationTestsFactory.cs
-│  ├─📄 ProdutosControllerTests.cs
-│  └─📄 SonarLint.xml
+│  └─📄 ProdutosControllerTests.cs
 │
 └─📁 WakeProdutos.Tests.Unit
-   ├─📁 ProdutoTests
-   │  ├─📄 AtualizarProdutoTests.cs
-   │  ├─📄 CadastrarProdutoTests.cs
-   │  ├─📄 DeletarProdutoTests.cs
-   │  ├─📄 ListarProdutosTests.cs
-   │  └─📄 ObterProdutoPorIdTests.cs
-   └─📄 SonarLint.xml
+   └─📁 ProdutoTests
+      ├─📄 AtualizarProdutoTests.cs
+      ├─📄 CadastrarProdutoTests.cs
+      ├─📄 DeletarProdutoTests.cs
+      ├─📄 ListarProdutosTests.cs
+      └─📄 ObterProdutoPorIdTests.cs
+```
 
+### Abordagem do Entity Framework
 
-Abordagem do Entity Framework
------------------------------
-- Implementação Code-First: as entidades são definidas no projeto `Domain` e o `WakeDbContext` mapeia estas entidades.
-- Migrations podem ser adicionadas se desejar persistir em um banco relacional (ex.: SQL Server). Para os testes de integração usamos `InMemoryDatabase` e `WakeDbContextSeed` para popular dados.
+- As entidades são definidas no projeto `Domain` e o `WakeDbContext` mapeia estas entidades.
+- Para os testes de integração usamos `InMemoryDatabase` e `WakeDbContextSeed` para popular dados com 5 produtos iniciais.
 
-Como executar o projeto
------------------------
+### Como executar o projeto
+
 Pré-requisitos: .NET9 SDK instalado.
 
 1. Iniciar API localmente:
@@ -136,20 +130,16 @@ Pré-requisitos: .NET9 SDK instalado.
 3. Ou acessar a interface Swagger (opcional):
  - Acesse `https://localhost:{port}/swagger` para a UI tradicional opcionalmente.
 
-Como executar os testes
-----------------------
+### Como executar os testes
+
 - Testes unitários: `dotnet test tests/WakeProdutos.Tests.Unit`
 - Testes de integração: `dotnet test tests/WakeProdutos.Tests.Integration`
 
-Endpoints principais
---------------------
+### Endpoints principais
+
 Base: `/api/v1`
 - `GET /produtos` — Listar produtos (opções de filtro por nome e ordenação)
 - `GET /produtos/{id}` — Obter produto por id
 - `POST /produtos` — Cadastrar produto
 - `PUT /produtos/{id}` — Atualizar produto
 - `DELETE /produtos/{id}` — Deletar produto
-
-Contato
--------
-Para contribuições ou dúvidas, abra uma issue ou PR no repositório.
