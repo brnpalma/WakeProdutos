@@ -62,6 +62,26 @@ Ao executar a aplicação, o banco de dados e suas tabelas são **criados automa
 - Testes unitários: `dotnet test tests/WakeProdutos.Tests.Unit`
 - Testes de integração: `dotnet test tests/WakeProdutos.Tests.Integration`
 
+## 🧪 Descrição dos Testes
+
+O repositório contém testes unitários e de integração. Abaixo uma lista dos testes atuais e uma breve descrição de cada um.
+
+Testes unitários (pasta: `tests/WakeProdutos.Tests.Unit`)
+- `ProdutoTests/CadastrarProdutoTests.cs` — Valida cenários do comando de cadastro: sucesso com dados válidos, erros para nome inválido e valor negativo.
+- `ProdutoTests/AtualizarProdutoTests.cs` — Testa atualização de produto: sucesso para produto existente com dados válidos, 404 para produto inexistente e 400 para dados inválidos.
+- `ProdutoTests/DeletarProdutoTests.cs` — Verifica o comportamento do comando de exclusão lógica: sucesso ao deletar produto existente e 404 para produto inexistente.
+- `ProdutoTests/ListarProdutosTests.cs` — Testa a query de listagem: retorna coleção completa sem filtros e valida comportamento ao receber parâmetro `ordenarPor` inválido.
+- `ProdutoTests/ObterProdutoPorIdTests.cs` — Testa a query de obter por id: retorna produto específico quando existe e 404 quando não existe.
+
+Testes de integração (pasta: `tests/WakeProdutos.Tests.Integration`)
+- `IntegrationTestsFactory.cs` — Fabrica de testes que configura o ambiente de teste (WebApplicationFactory) usando um banco InMemory e popula dados via `WakeDbContextSeed`.
+- `ProdutosControllerTests.cs` — Testes de API end-to-end contra a aplicação em memória.
+ - `ListarProdutos_RetornaProdutosSeedados` — Verifica listagem de produtos seedados.
+ - `ObterProdutoPorId_RetornaProduto` — Valida retorno de produto por id existente.
+ - `CadastrarProduto_CriaProduto` — Testa endpoint de criação e código 201 de retornoo.
+ - `AtualizarProduto_AtualizaProduto` — Cria um produto e testa atualização via PUT.
+ - `DeletarProduto_ExcluiProdutoLogicamente` — Cria e deleta um produto; valida que a exclusão é feita logicamente (GET por id retorna 404 e o produto não aparece na listagem).
+
 ## 🔗 Endpoints principais
 
 Base: `/api/v1`
