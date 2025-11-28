@@ -40,8 +40,8 @@ Tecnologias e bibliotecas
 
 Estrutura da Solution (principais pastas/arquivos)
 -------------------------------------------------
-
 📁 src
+│
 ├─📁 WakeProdutos.API
 │  ├─📁 Properties
 │  │  └─📄 launchSettings.json
@@ -55,7 +55,6 @@ Estrutura da Solution (principais pastas/arquivos)
 │  │  └─📄 ExceptionMiddleware.cs
 │  ├─📄 appsettings.json
 │  ├─📄 Program.cs
-│  ├─📄 SonarLint.xml
 │  └─📄 WakeProdutos.http
 │
 ├─📁 WakeProdutos.Application
@@ -64,26 +63,21 @@ Estrutura da Solution (principais pastas/arquivos)
 │  │  ├─📄 ListaProdutoDto.cs
 │  │  └─📄 ProdutoDto.cs
 │  ├─📁 UseCases
-│  │  └─📁 Produtos
-│  │     ├─📁 Commands
-│  │     │  ├─📁 AtualizarProduto
-│  │     │  │  ├─📄 AtualizarProdutoCommand.cs
-│  │     │  │  └─📄 AtualizarProdutoHandler.cs
-│  │     │  ├─📁 CadastrarProdutos
-│  │     │  │  ├─📄 CadastrarProdutoCommand.cs
-│  │     │  │  └─📄 CadastrarProdutoHandler.cs
-│  │     │  └─📁 DeletarProduto
-│  │     │     ├─📄 DeletarProdutoCommand.cs
-│  │     │     └─📄 DeletarProdutoHandler.cs
-│  │     └─📁 Queries
-│  │        ├─📁 ListarProdutos
-│  │        │  ├─📄 ListarProdutosHandler.cs
-│  │        │  └─📄 ListarProdutosQuery.cs
-│  │        └─📁 ProdutoPorId
-│  │           ├─📄 ObterProdutoPorIdQuery.cs
-│  │           └─📄 ObterProdutoPorIdQueryHandler.cs
-│  ├─📄 DependencyInjection.cs
-│  └─📄 SonarLint.xml
+│  │  ├─📁 Produtos
+│  │  │  ├─📁 Commands
+│  │  │  │  ├─📄 AtualizarProdutoCommand.cs
+│  │  │  │  ├─📄 CadastrarProdutoCommand.cs
+│  │  │  │  └─📄 DeletarProdutoCommand.cs
+│  │  │  ├─📁 Handlers
+│  │  │  │  ├─📄 AtualizarProdutoHandler.cs
+│  │  │  │  ├─📄 CadastrarProdutoHandler.cs
+│  │  │  │  └─📄 DeletarProdutoHandler.cs
+│  │  │  ├─📁 Queries
+│  │  │  │  ├─📄 ListarProdutosHandler.cs
+│  │  │  │  ├─📄 ListarProdutosQuery.cs
+│  │  │  │  ├─📄 ObterProdutoPorIdQuery.cs
+│  │  │  │  └─📄 ObterProdutoPorIdQueryHandler.cs
+│  └─📄 DependencyInjection.cs
 │
 ├─📁 WakeProdutos.Domain
 │  ├─📁 Entities
@@ -95,45 +89,35 @@ Estrutura da Solution (principais pastas/arquivos)
 ├─📁 WakeProdutos.Infrastructure
 │  ├─📁 Data
 │  │  ├─📁 Context
-│  │  │  └─📄 WakeDbContext.cs
-│  │  └─📁 Seed
-│  │     └─📄 WakeDbContextSeed.cs
-│  ├─📁 Repositories
-│  │  └─📄 ProdutoRepository.cs
-│  ├─📄 DependencyInjection.cs
+│  │  │  ├─📄 WakeDbContext.cs
+│  │  │  └─📄 WakeDbContextSeed.cs
+│  │  ├─📁 Repositories
+│  │  │  └─📄 ProdutoRepository.cs
+│  │  └─📄 DependencyInjection.cs
 │  └─📄 SonarLint.xml
 │
 └─📁 WakeProdutos.Shared
-    ├─📁 Constants
-    │  └─📄 Constantes.cs
-    ├─📁 Results
-    │  └─📄 Result.cs
-    └─📄 SonarLint.xml
-
+   ├─📁 Constants
+   │  └─📄 Constantes.cs
+   ├─📁 Results
+   │  └─📄 Result.cs
+   └─📄 SonarLint.xml
 📁 tests
+│
 ├─📁 WakeProdutos.Tests.Integration
 │  ├─📄 IntegrationTestsFactory.cs
 │  ├─📄 ProdutosControllerTests.cs
-│  ├─📄 SonarLint.xml
-│  ├─📄 testhost.dll
-│  ├─📄 testhost.exe
-│  ├─📄 xunit.runner.reporters.netcoreapp10.dll
-│  ├─📄 xunit.runner.utility.netcoreapp10.dll
-│  └─📄 xunit.runner.visualstudio.dotnetcore.testadapter.dll
+│  └─📄 SonarLint.xml
 │
 └─📁 WakeProdutos.Tests.Unit
-    ├─📁 ProdutoTests
-    │  ├─📄 AtualizarProdutoTests.cs
-    │  ├─📄 CadastrarProdutoTests.cs
-    │  ├─📄 DeletarProdutoTests.cs
-    │  ├─📄 ListarProdutosTests.cs
-    │  └─📄 ObterProdutoPorIdTests.cs
-    ├─📄 SonarLint.xml
-    ├─📄 testhost.dll
-    ├─📄 testhost.exe
-    ├─📄 xunit.runner.reporters.netcoreapp10.dll
-    ├─📄 xunit.runner.utility.netcoreapp10.dll
-    └─📄 xunit.runner.visualstudio.dotnetcore.testadapter.dll
+   ├─📁 ProdutoTests
+   │  ├─📄 AtualizarProdutoTests.cs
+   │  ├─📄 CadastrarProdutoTests.cs
+   │  ├─📄 DeletarProdutoTests.cs
+   │  ├─📄 ListarProdutosTests.cs
+   │  └─📄 ObterProdutoPorIdTests.cs
+   └─📄 SonarLint.xml
+
 
 Abordagem do Entity Framework
 -----------------------------
