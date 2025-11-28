@@ -6,6 +6,7 @@
         public string Nome { get; set; } = nome;
         public int Estoque { get; set; } = estoque;
         public decimal Valor { get; set; } = valor;
+        public bool Excluido { get; set; } = false;
 
         public static bool CheckData(string nome, int estoque, decimal valor, out Produto produto, out string? error)
         {
