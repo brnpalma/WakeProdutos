@@ -23,8 +23,6 @@ namespace WakeProdutos.Infrastructure.Repositories
 
         public async Task DeletarAsync(Produto produto)
         {
-            // Soft-delete: marcar o produto como excluído em vez de removê-lo fisicamente
-            produto.Excluido = true;
             _context.Produtos.Update(produto);
             await _context.SaveChangesAsync();
         }

@@ -18,6 +18,8 @@ namespace WakeProdutos.Application.UseCases.Produtos.Commands.DeletarProduto
                 return Result<ProdutoDto>.Fail(404, "Nenhum produto encontrado com este Id.", null);
             }
 
+            // Soft-delete: marcar o produto como excluído em vez de removê-lo fisicamente
+            produtoBanco.Excluido = true;
             await _produtoRepository.DeletarAsync(produtoBanco);
 
             var produtoDto = new ProdutoDto

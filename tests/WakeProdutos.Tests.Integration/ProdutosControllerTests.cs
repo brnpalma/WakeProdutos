@@ -5,9 +5,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using WakeProdutos.Application.Dtos;
 using WakeProdutos.Application.UseCases.Produtos.Commands.CadastrarProdutos;
-using WakeProdutos.Application.UseCases.Produtos.Commands.DeletarProduto;
-using WakeProdutos.Application.UseCases.Produtos.Queries.ListarProdutos;
-using WakeProdutos.Application.UseCases.Produtos.Queries.ProdutoPorId;
 using Xunit;
 
 namespace WakeProdutos.Tests.Integration;
