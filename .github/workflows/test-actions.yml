@@ -29,4 +29,4 @@ jobs:
 
     # 5. Executar testes
     - name: Test
-      run: dotnet test WakeProdutos.sln --no-build --verbosity normal
+      run: dotnet test WakeProdutos.sln --configuration Release --verbosity normal
