@@ -24,7 +24,7 @@ public class AtualizarProdutoTests
         var result = await handler.Handle(command, default);
 
         result.Sucesso.Should().BeTrue();
-        result.Status.Should().Be(201);
+        result.Status.Should().Be(200);
         result.Data.Should().NotBeNull();
         result.Data!.Nome.Should().Be("Livro Atualizado");
     }

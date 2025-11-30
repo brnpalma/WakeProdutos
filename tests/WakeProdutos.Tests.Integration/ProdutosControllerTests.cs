@@ -66,7 +66,7 @@ public class ProdutosControllerTests(IntegrationTestsFactory factory) : IClassFi
         //Atualizar
         var updateDto = new { Nome = "Miniatura Prototipo 1:48", Estoque = 7, Valor = 159.0m };
         var putResp = await _client.PutAsJsonAsync($"/api/v1/produtos/{id}", updateDto);
-        putResp.StatusCode.Should().Be(HttpStatusCode.Created);
+        putResp.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var updated = await putResp.Content.ReadFromJsonAsync<ProdutoDto>();
 

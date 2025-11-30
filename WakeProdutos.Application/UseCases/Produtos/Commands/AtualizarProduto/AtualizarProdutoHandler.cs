@@ -40,7 +40,7 @@ namespace WakeProdutos.Application.UseCases.Produtos.Commands.AtualizarProduto
                 Sucesso = true
             };
 
-            return Result<ProdutoDto>.Ok(produtoDto, 201);
+            return Result<ProdutoDto>.Ok(produtoDto, 200);
         }
     }
 }

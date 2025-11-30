@@ -9,8 +9,8 @@ Ao executar a aplicação, o banco de dados e suas tabelas são **criados automa
 ## 💡 Observações iniciais
 
 - O modo *Code-First* foi o escolhido para desenvolvimento de toda a aplicação.
-- Por padrão a aplicação inicializa com *Scalar* (`Scalar.AspNetCore`) — uma interface mais completa e com visual personalizado em `https://localhost:{port}/scalar`.
-- Também é possível expor e usar o *Swagger* (via `Swashbuckle`) se preferir uma interface mais tradicional em `https://localhost:{port}/swagger`.
+- Por padrão, inicializa com *Scalar* (`Scalar.AspNetCore`) — uma interface mais completa e com visual personalizado em `https://localhost:{port}/scalar`.
+- Também é possível usar o *Swagger* (via `Swashbuckle`) se preferir uma interface mais tradicional em `https://localhost:{port}/swagger`.
 
 ## 🗂️ Projetos na Solution
 
@@ -18,7 +18,7 @@ Ao executar a aplicação, o banco de dados e suas tabelas são **criados automa
 - `WakeProdutos.Application` — Casos de uso, DTOs e handlers (MediatR) para CQRS.
 - `WakeProdutos.Infrastructure` — Implementações de acesso a dados, EF Core `DbContext`, repositórios e seed.
 - `WakeProdutos.Domain` — Entidades e regras de negócio.
-- `WakeProdutos.Shared` — Constantes, resultados (Result<T>) genéricos e utilitários compartilhados.
+- `WakeProdutos.Shared` — Constantes, classes de resultados genéricos (Result<T>) e utilitários compartilhados.
 - `tests/WakeProdutos.Tests.Unit` — Testes unitários (xUnit, Moq, FluentAssertions).
 - `tests/WakeProdutos.Tests.Integration` — Testes de integração (xUnit, WebApplicationFactory, InMemory DB).
 
@@ -31,7 +31,7 @@ Ao executar a aplicação, o banco de dados e suas tabelas são **criados automa
 
 ## 🧩 Requisitos e Tecnologias Principais  
 
-- 🖥️ **Linguagem:** C# 13 (.NET 9.0)
+- 🖥️ .NET 9.0 (C# 13)
 - 🌐 ASP.NET Core Web API
 - 🗄️ Entity Framework Core
 - 🧪 Microsoft.EntityFrameworkCore.InMemory (para testes de integração)
@@ -57,6 +57,8 @@ Ao executar a aplicação, o banco de dados e suas tabelas são **criados automa
 3. Ou acessar a interface Swagger (opcional):
  - Acesse `https://localhost:{port}/swagger` para a UI tradicional opcionalmente.
 
+ OBS.: O padrão de portas do projeto é, 7284 (HTTPS) e 5091 (HTTP), porém, confira no console a porta gerada após execução de `dotnet run`.
+
 ## 🧪 Como executar os testes
 
 - Testes unitários: `dotnet test tests/WakeProdutos.Tests.Unit`
@@ -78,14 +80,14 @@ Testes de integração (pasta: `tests/WakeProdutos.Tests.Integration`)
 - `ProdutosControllerTests.cs` — Testes de API end-to-end contra a aplicação em memória.
  - `ListarProdutos_RetornaProdutosSeedados` — Verifica listagem de produtos seedados.
  - `ObterProdutoPorId_RetornaProduto` — Valida retorno de produto por id existente.
- - `CadastrarProduto_CriaProduto` — Testa endpoint de criação e código 201 de retornoo.
+ - `CadastrarProduto_CriaProduto` — Testa endpoint de criação e código 201 de retorno.
  - `AtualizarProduto_AtualizaProduto` — Cria um produto e testa atualização via PUT.
- - `DeletarProduto_ExcluiProdutoLogicamente` — Cria e deleta um produto; valida que a exclusão é feita logicamente (GET por id retorna 404 e o produto não aparece na listagem).
+ - `DeletarProduto_ExcluiProdutoLogicamente` — Cria e deleta um produto. Valida se a exclusão é feita logicamente (GET por id retorna 404 e o produto não aparece mais na listagem).
 
 ## 🔗 Endpoints principais
 
 Base: `/api/v1`
-- `GET /produtos` — Listar produtos (opções de filtro por nome e ordenação)
+- `GET /produtos` — Listar produtos (opções de filtro por nome e ordenação por Estoque, Valor, Id ou Nome)
 - `GET /produtos/{id}` — Obter produto por id
 - `POST /produtos` — Cadastrar produto
 - `PUT /produtos/{id}` — Atualizar produto
