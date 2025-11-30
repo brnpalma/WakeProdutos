@@ -84,6 +84,22 @@ Testes de integração (pasta: `tests/WakeProdutos.Tests.Integration`)
  - `AtualizarProduto_AtualizaProduto` — Cria um produto e testa atualização via PUT.
  - `DeletarProduto_ExcluiProdutoLogicamente` — Cria e deleta um produto. Valida se a exclusão é feita logicamente (GET por id retorna 404 e o produto não aparece mais na listagem).
 
+## 📦 Integração Contínua (GitHub Actions)
+
+Foi configurado um pipeline de CI usando **GitHub Actions** (diretório `.github/workflows`). De forma resumida, o fluxo automatizado executa as seguintes etapas em cada push e pull request:
+
+- Trigger: acionado em `push` e `pull_request` (normalmente para branches principais).
+- Matriz de execução: executa em runners do GitHub (ex.: `ubuntu-latest`) para validar multiplataformas.
+- Configuração do ambiente .NET: instala o SDK `.NET9` necessário para o build e testes.
+- Cache de pacotes NuGet: utiliza cache para acelerar restores entre execuções.
+- Restore: `dotnet restore` para recuperar dependências.
+- Build: `dotnet build --no-restore` para compilar todos os projetos da solution.
+- Testes unitários: `dotnet test` nos projetos de testes unitários (xUnit) com relatório de saída.
+- Testes de integração: `dotnet test` nos projetos de integração (ambiente InMemory configurado pela fábrica de testes).
+- Relatórios (opcional): coleta de logs, resultados de teste e publicação de artefatos quando aplicável.
+
+Objetivo: garantir que alterações submetidas ao repositório compilam e passam nas suítes de testes, mantendo qualidade e evitando regressões.
+
 ## 🔗 Endpoints principais
 
 Base: `/api/v1`
